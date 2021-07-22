@@ -1,10 +1,13 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 function SearchView() {
     
+    const history = useHistory();
     const dispatch = useDispatch();
     const [ searchText, setSearchText ] = useState('');
+    const currentSearch = useSelector(store => store.currentSearch);
     
     const handleChange = (event) => {
         setSearchText(event.target.value);        
@@ -24,6 +27,23 @@ function SearchView() {
         setSearchText('');
     }
 
+    const favoriteHandler = (gifId, gifName, gifUrl) => {
+        console.log('In favoriteHandler'); // test
+        console.log('Id, name, URL', gifId, gifName, gifUrl); // test
+
+
+        // dispatch favorite to Saga
+        dispatch({ type: 'ADD_FAVORITE', payload: {
+            id: gifId,
+            name: gifName,
+            url: gifUrl
+        }});
+    }
+
+    const goToFavorites = () => {
+        history.push('/favorites')
+    }
+
     return (
         <div>
             <p>SearchView content</p>
@@ -39,7 +59,17 @@ function SearchView() {
                 </button>
             </form>
             <p>display searched gif here:</p>
-            <img src="https://im.rediff.com/news/2020/sep/15funny1.jpg" />
+                    <img src={currentSearch.url} height="200px"/>
+                    <br />
+                    <button
+                        onClick={() => {favoriteHandler(currentSearch.id, currentSearch.name, currentSearch.url)}}
+                    >
+                        Add to Favorites
+                    </button>
+                    <br />
+                    <button onClick={goToFavorites}>
+                        View Favorites
+                    </button>
         </div>
     );
 }
