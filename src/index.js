@@ -16,7 +16,9 @@ import axios from 'axios';
 // Saga:
 
 function* watcherSaga() {
-
+    yield takeEvery('GET_GIFS', fetchGifs);
+    yield takeEvery('ADD_FAVORITE', postGifs);
+    yield takeEvery('ADD_CATEGORY', putCategory);
 } 
 
 function* fetchGifs() {
