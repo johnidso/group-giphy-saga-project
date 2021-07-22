@@ -31,7 +31,7 @@ function* postGifs() {
 
 function* putCategory(id) {
     try {
-        yield call(axios.put, `/api/favorite'${id.payload}`)
+        yield call(axios.put, `/api/favorite${id.payload}`)
         yield put({type: 'GET_GIFS'});
     } catch (error) {
         console.log('Unable to update put,', error);
