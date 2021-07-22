@@ -19,7 +19,6 @@ const testCurrentSearch = {
 }
 // End of test search stuff
 
-// Reducers:
 
 // Store the GIF that was last searched
 const currentSearch = (state = testCurrentSearch, action) => {

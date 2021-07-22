@@ -1,7 +1,6 @@
 const express = require('express');
 const pool = require('../modules/pool');
-import axios from 'axios';
-
+const axios = require('axios')
 const router = express.Router();
 
 router.post('/', (req, res) => {
@@ -15,5 +14,9 @@ router.post('/', (req, res) => {
       res.sendStatus(500);
     });
 });
+
+router.get('/', (req, res) => {
+    console.log('in get')
+})
 
 module.exports = router;
