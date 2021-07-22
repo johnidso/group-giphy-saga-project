@@ -20,9 +20,9 @@ function App(props) {
         <Route exact path="/">
           <SearchView />
         </Route>
-        {/* <Route exact path="/favorites">
-          <FavoriteView />
-        </Route> */}
+        <Route exact path="/favorites">
+          <Favorites />
+        </Route>
       </Router>
     </div>
   );
