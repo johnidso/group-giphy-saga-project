@@ -23,6 +23,10 @@ function Favorites () {
 
     return(
         <>
+            <h2>My Favorites</h2>
+            {favorites.map(favorite => {
+                !favorite.category && <img src={favorite.url}/> 
+                })}    
             <h2>Funny</h2>
             {favorites.map(favorite => {
                 sortFavorites('funny', favorite)
