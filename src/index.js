@@ -19,7 +19,6 @@ const testCurrentSearch = {
 }
 // End of test search stuff
 
-// Reducers:
 
 // Store the GIF that was last searched
 const currentSearch = (state = testCurrentSearch, action) => {
@@ -37,7 +36,12 @@ function* watcherSaga() {
 } 
 
 function* fetchGifs() {
-    
+    try {
+        const searchResponse = yield axios.get('/api/');
+        yield put({ type: 'GET_GIFS', payload: searchResponse.data});
+    } catch (error) {
+        console.log('Error fetching gifs.', error);
+    }
 }
 
 function* searchGiphy() {
