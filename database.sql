@@ -17,8 +17,8 @@ VALUES ('funny'), ('cohort'), ('cartoon'), ('nsfw'), ('meme');
 CREATE TABLE favorites (
 	"id" SERIAL PRIMARY KEY,
 	"url" varchar(250),
-	"category" varchar (250)
+	"category_id" varchar (250)
 );
 
-INSERT INTO favorites ("url", "category")
-			VALUES ('https://media.giphy.com/media/lz67zZWfWPsWnuGH0s/giphy.gif', 'funny');
+INSERT INTO favorites ("url", "category_id")
+			VALUES ('https://media.giphy.com/media/lz67zZWfWPsWnuGH0s/giphy.gif', '1');
