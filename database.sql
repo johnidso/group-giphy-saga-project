@@ -20,5 +20,5 @@ CREATE TABLE favorites (
 	"category_id" varchar (250)
 );
 
-INSERT INTO favorites ("url", "category")
+INSERT INTO favorites ("url", "category_id")
 			VALUES ('https://media.giphy.com/media/lz67zZWfWPsWnuGH0s/giphy.gif', '1');
