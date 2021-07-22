@@ -1,3 +1,4 @@
+const { default: axios } = require('axios');
 const express = require('express');
 const pool = require('../modules/pool');
 
@@ -5,7 +6,15 @@ const router = express.Router();
 
 // return all favorite images
 router.get('/', (req, res) => {
-  res.sendStatus(200);
+  let queryText = 'SELECT * FROM favorites';
+  pool.query(queryText)
+  .then(result => {
+    result.send(result.rows);
+  })
+  .catch(err => {
+    console.log('Error getting favorites', err);
+    res.sendStatus(500);
+  });
 });
 
 // add a new favorite
