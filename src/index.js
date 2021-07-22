@@ -15,10 +15,15 @@ import axios from 'axios';
 
 function* watcherSaga() {
     yield takeEvery('GET_GIFS', fetchGifs);
+    yield takeEvery('SEARCH_GIPHY', searchGiphy)
     yield takeEvery('ADD_FAVORITE', postGifs);
     yield takeEvery('ADD_CATEGORY', putCategory);
     yield takeEvery('GET_FAVORITES', getFavorites);
 } 
+
+function* searchGiphy() {
+    
+}
 
 function* fetchGifs() {
     
