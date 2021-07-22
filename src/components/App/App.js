@@ -4,10 +4,6 @@ import { HashRouter as Router, Route, Link} from 'react-router-dom';
 
 function App(props) {
 
-const updateGif = () => {
-  dispatch: ({ type: 'ADD_CATEGORY', payload: id});
-}
-
 
 
   return (
