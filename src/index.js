@@ -22,7 +22,12 @@ function* watcherSaga() {
 } 
 
 function* fetchGifs() {
-    
+    try {
+        const searchResponse = yield axios.get('/api/');
+        yield put({ type: 'GET_GIFS', payload: searchResponse.data});
+    } catch (error) {
+        console.log('Error fetching gifs.', error);
+    }
 }
 
 function* postGifs() {
