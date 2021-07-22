@@ -13,8 +13,8 @@ function Favorites () {
         getFavorites;
       }, []);
 
-    const sortFavorites = (category, item) => {
-        if(item.category == category){
+    const sortFavorites = (displayCategory, item) => {
+        if(item.category == displayCategory){
             return (
                 <img src={item.url} />
             )
