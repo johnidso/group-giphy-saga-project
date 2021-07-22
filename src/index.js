@@ -11,8 +11,6 @@ import { put, takeEvery, call } from 'redux-saga/effects';
 import logger from 'redux-logger';
 import axios from 'axios';
 
-// Reducers:
-
 // Saga:
 
 function* watcherSaga() {
@@ -20,6 +18,7 @@ function* watcherSaga() {
     yield takeEvery('SEARCH_GIPHY', searchGiphy)
     yield takeEvery('ADD_FAVORITE', postGifs);
     yield takeEvery('ADD_CATEGORY', putCategory);
+    yield takeEvery('GET_FAVORITES', getFavorites);
 } 
 
 function* searchGiphy() {
@@ -38,6 +37,26 @@ function* putCategory() {
 
 }
 
+function* getFavorites() {
+    try{
+        const getResponse = yield axios.get('/favorites');
+        console.log(getResponse);
+        yield put({type:'SET_FAVORITES', payload: getResponse.data});
+    } catch(error) {
+        console.log('Error getting favorites', error);
+    }
+}
+
+// Reducers:
+
+favoritesReducer = (state = [], action) => {
+    switch(action.type) {
+        case 'SET_FAVORITES':
+            return action.payload;
+        default:
+            return state;
+    }
+}
 
 
 const sagaMiddleware = createSagaMiddleware();
@@ -46,7 +65,7 @@ const sagaMiddleware = createSagaMiddleware();
 
 const storeInstance = createStore(
     combineReducers({
-
+        favoritesReducer,
     }),
     applyMiddleware(sagaMiddleware, logger),
 );
