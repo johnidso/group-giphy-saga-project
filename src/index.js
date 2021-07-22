@@ -11,6 +11,21 @@ import { put, takeEvery, call } from 'redux-saga/effects';
 import logger from 'redux-logger';
 import axios from 'axios';
 
+// TD test search object
+const testCurrentSearch = {
+    url: 'https://im.rediff.com/news/2020/sep/15funny1.jpg',
+    name: 'Goofy Fish',
+    id: 1
+}
+// End of test search stuff
+
+// Reducers:
+
+// Store the GIF that was last searched
+const currentSearch = (state = testCurrentSearch, action) => {
+    return state;
+}
+
 // Saga:
 
 function* watcherSaga() {
@@ -21,11 +36,11 @@ function* watcherSaga() {
     yield takeEvery('GET_FAVORITES', getFavorites);
 } 
 
-function* searchGiphy() {
+function* fetchGifs() {
     
 }
 
-function* fetchGifs() {
+function* searchGiphy() {
     
 }
 
@@ -65,6 +80,7 @@ const sagaMiddleware = createSagaMiddleware();
 
 const storeInstance = createStore(
     combineReducers({
+        currentSearch,
         favoritesReducer,
     }),
     applyMiddleware(sagaMiddleware, logger),
