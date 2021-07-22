@@ -54,7 +54,7 @@ function* putCategory() {
 
 function* getFavorites() {
     try{
-        const getResponse = yield axios.get('/favorites');
+        const getResponse = yield axios.get('/api/favorites');
         console.log(getResponse);
         yield put({type:'SET_FAVORITES', payload: getResponse.data});
     } catch(error) {
