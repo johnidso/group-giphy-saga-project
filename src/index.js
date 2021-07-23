@@ -19,8 +19,6 @@ const testCurrentSearch = {
 }
 // End of test search stuff
 
-// Reducers:
-
 // Store the GIF that was last searched
 const currentSearch = (state = testCurrentSearch, action) => {
     return state;
@@ -64,7 +62,7 @@ function* getFavorites() {
 
 // Reducers:
 
-favoritesReducer = (state = [], action) => {
+const favoritesReducer = (state = [], action) => {
     switch(action.type) {
         case 'SET_FAVORITES':
             return action.payload;
