@@ -27,17 +27,13 @@ function SearchView() {
         setSearchText('');
     }
 
-    const favoriteHandler = (gifId, gifName, gifUrl) => {
+    const favoriteHandler = (gifUrl) => {
         console.log('In favoriteHandler'); // test
-        console.log('Id, name, URL', gifId, gifName, gifUrl); // test
+        console.log('Id, name, URL', gifUrl); // test
 
 
         // dispatch favorite to Saga
-        dispatch({ type: 'ADD_FAVORITE', payload: {
-            id: gifId,
-            name: gifName,
-            url: gifUrl
-        }});
+        dispatch({ type: 'ADD_FAVORITE', payload: { url: gifUrl}});
     }
 
     const goToFavorites = () => {
@@ -62,7 +58,7 @@ function SearchView() {
                     <img src={currentSearch} height="200px"/>
                     <br />
                     <button
-                        onClick={() => {favoriteHandler(currentSearch.id, currentSearch.name, currentSearch.url)}}
+                        onClick={() => {favoriteHandler(currentSearch)}}
                     >
                         Add to Favorites
                     </button>

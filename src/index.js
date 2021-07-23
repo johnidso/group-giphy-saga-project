@@ -48,8 +48,13 @@ function* searchGiphy(action) {
     
 }
 
-function* postGifs() {
-
+function* postGifs(action) {
+    console.log('in postGifs. Payload:', action.payload);
+    try {
+        yield axios.post('/api/favorite', action.payload);
+    } catch (error) {
+        console.log('error adding to favorites');
+    }
 }
 
 // this function gets the categories from db table, categories
@@ -76,7 +81,7 @@ function* putCategory(category) {
 // this function gets all the favorites then sets favorites into a reducer
 function* getFavorites() {
     try{
-        const getResponse = yield axios.get('/api/favorites');
+        const getResponse = yield axios.get('/api/favorite');
         console.log(getResponse);
         yield put({type:'SET_FAVORITES', payload: getResponse.data});
     } catch(error) {

@@ -9,7 +9,7 @@ router.get('/', (req, res) => {
   let queryText = 'SELECT * FROM favorites';
   pool.query(queryText)
   .then(result => {
-    result.send(result.rows);
+    res.send(result.rows);
   })
   .catch(err => {
     console.log('Error getting favorites', err);
@@ -19,7 +19,19 @@ router.get('/', (req, res) => {
 
 // add a new favorite
 router.post('/', (req, res) => {
-  res.sendStatus(200);
+  console.log('req.body.url is:', req.body.url); // test
+  const gifUrl = req.body.url;
+  let queryText = `INSERT INTO "favorites" ("url") VALUES ($1);`;
+
+  pool.query(queryText, [gifUrl])
+    .then(response => {
+      console.log('successfully added GIF to DB'); // test
+      res.sendStatus(200);
+    })
+    .catch(error => {
+      console.log('Error adding favorite to DB. Error:', error);
+      res.sendStatus(500);
+    })
 });
 
 // update given favorite with a category id
