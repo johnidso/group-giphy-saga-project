@@ -1,11 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 
 function FavoriteItem (favorites) {
 
-    const dbCategories = useSelector(store => store.categoryReducer);
     const dispatch = useDispatch();
-    const [category, setCategory] = useState();
+    const dbCategories = useSelector(store => store.categoryReducer);
 
         // this retrieves the category list from our database
         const getCategories = () => {
@@ -13,21 +12,24 @@ function FavoriteItem (favorites) {
         }
 
             // this updates our favorites category id inside our database
-    const putCategory = () => {
-        dispatch({ type: 'ADD_CATEGORY', payload: category});
+    const handleClick = (event) => {
+        dispatch({ type: 'ADD_CATEGORY', payload: {favoriteId: favorites.favorites.id, categoryName: event}});
     }
 
     useEffect( () => {
         getCategories();
-        // putCategory(); // It's unclear to me why we would call this function when the page loads - Tim
       }, []);
+
 
     return (
             <div>
-                <img src={favorites.url}></img>
+                <p><img src={favorites.favorites.url}></img></p>
                 {dbCategories.map((category, index) => {
                     return (
-                        <input type="radio" label={category} value={category} onChange={(event) => setCategory(event.target.value)} />
+                        <>
+                            <input key={index} type="radio" name="category" id="category" value={category.name} onChange={(event) => handleClick(event.target.value)} />
+                            <label for="category">{category.name}</label>
+                        </>
                     )
                 })}
             </div>

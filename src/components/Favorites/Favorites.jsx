@@ -2,10 +2,12 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import FavoriteItem from "../FavoriteItem/FavoriteItem";
+import { useHistory } from "react-router";
 
 
 function Favorites () {
 
+    const history = useHistory();
     const dispatch = useDispatch();
     const favorites = useSelector(store => store.favoritesReducer);
 
@@ -26,6 +28,9 @@ function Favorites () {
 
     return(
         <>
+        <div>
+            <p>Favorite Count: {favorites.length}</p>
+        </div>
         <div>
             {favorites.map((gif, index) => {
                 return (
