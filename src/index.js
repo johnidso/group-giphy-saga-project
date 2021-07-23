@@ -12,17 +12,9 @@ import logger from 'redux-logger';
 import axios from 'axios';
 
 // TD test search object
-const testCurrentSearch = {
-    url: 'https://im.rediff.com/news/2020/sep/15funny1.jpg',
-    name: 'Goofy Fish',
-    id: 1
-}
+const testCurrentSearch = 'https://im.rediff.com/news/2020/sep/15funny1.jpg';
 // End of test search stuff
 
-// Store the GIF that was last searched
-const currentSearch = (state = testCurrentSearch, action) => {
-    return state;
-}
 
 // Saga:
 
@@ -43,7 +35,15 @@ function* fetchGifs() {
     }
 }
 
-function* searchGiphy() {
+function* searchGiphy(action) {
+    console.log('in searchGiphy. Payload:', action.payload);
+    try {
+        const searchResponse = yield axios.post('/api/search', action.payload);
+        console.log('This is searchResponse:', searchResponse); // test
+        yield put({ type: 'SET_CURRENT_SEARCH', payload: searchResponse.data.data[0].images.original.url});
+    } catch (error) {
+        console.log('Error searching GIPHY. Error:', error);
+    }
     
 }
 
@@ -81,6 +81,13 @@ const favoritesReducer = (state = [], action) => {
     }
 }
 
+// Reducer to store the GIF that was last searched
+const currentSearch = (state = testCurrentSearch, action) => {
+    if (action.type === 'SET_CURRENT_SEARCH') {
+        return action.payload;
+    }
+    return state;
+}
 
 const sagaMiddleware = createSagaMiddleware();
 
