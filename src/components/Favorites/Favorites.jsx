@@ -27,6 +27,9 @@ function Favorites () {
     return(
         <>
         <div>
+            <p>Favorite Count: {favorites.length}</p>
+        </div>
+        <div>
             {favorites.map((gif, index) => {
                 return (
                     <FavoriteItem key={index} favorites={gif}/>
@@ -34,7 +37,6 @@ function Favorites () {
             })}
         </div>
         <div>
-            <p>Favorite Count: {favorites.length}</p>
             <button onClick={backToSearchClick}>Back to Search</button>
         </div>
         </>
