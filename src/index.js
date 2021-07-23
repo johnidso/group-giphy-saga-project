@@ -19,7 +19,7 @@ const testCurrentSearch = 'https://im.rediff.com/news/2020/sep/15funny1.jpg';
 // Saga:
 
 function* watcherSaga() {
-    yield takeEvery('GET_GIFS', fetchGifs);
+    // yield takeEvery('GET_GIFS', fetchGifs);
     yield takeEvery('SEARCH_GIPHY', searchGiphy)
     yield takeEvery('ADD_FAVORITE', postGifs);
     yield takeEvery('ADD_CATEGORY', putCategory);
@@ -27,14 +27,14 @@ function* watcherSaga() {
     yield takeEvery('GET_CATEGORIES', getCategories);
 } 
 
-function* fetchGifs() {
-    try {
-        const searchResponse = yield axios.get('/api/');
-        yield put({ type: 'GET_GIFS', payload: searchResponse.data});
-    } catch (error) {
-        console.log('Error fetching gifs.', error);
-    }
-}
+// function* fetchGifs() {
+//     try {
+//         const searchResponse = yield axios.get('/api/favorite');
+//         yield put({ type: 'GET_GIFS', payload: searchResponse.data});
+//     } catch (error) {
+//         console.log('Error fetching gifs.', error);
+//     }
+// }
 
 function* searchGiphy(action) {
     console.log('in searchGiphy. Payload:', action.payload.searchText);
@@ -74,7 +74,7 @@ function* getCategories() {
 // this function updates the category_id of the favorited images in table, favorites
 function* putCategory(category) {
     try {
-        yield call(axios.put, `/api/favorite${category.payload}`)
+        yield call(axios.put, `/api/favorite`, category.payload)
         yield put({type: 'GET_GIFS'});
     } catch (error) {
         console.log('Unable to update put,', error);
