@@ -5,9 +5,10 @@ const router = express.Router();
 
 require('dotenv').config();
 
-router.post('/', (req, res) => {
-    console.log('req.body:', req.body); // test
-    const searchString = req.body.searchText;
+router.get('/', (req, res) => {
+    console.log('req.query.q:', req.query.q); // test
+    const searchString = req.query.q;
+    // const searchString = req.body.searchText;
     axios.get(`http://api.giphy.com/v1/gifs/search?api_key=${process.env.GIPHY_API_KEY}&q=${searchString}&limit=3&rating=pg`)
     .then((result) => {
       // console.log('This is the result:', result); // test
