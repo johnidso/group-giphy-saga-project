@@ -3,7 +3,7 @@ import SearchView from '../SearchView/SearchView';
 import Favorites from '../Favorites/Favorites';
 import { HashRouter as Router, Route, Link} from 'react-router-dom';
 
-
+import './App.css';
 
 function App(props) {
 
