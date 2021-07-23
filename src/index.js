@@ -33,6 +33,7 @@ function* watcherSaga() {
     yield takeEvery('ADD_FAVORITE', postGifs);
     yield takeEvery('ADD_CATEGORY', putCategory);
     yield takeEvery('GET_FAVORITES', getFavorites);
+    yield takeEvery('GET_CATEGORIES', getCategories);
 } 
 
 function* fetchGifs() {
@@ -52,15 +53,28 @@ function* postGifs() {
 
 }
 
-function* putCategory(id) {
+// this function gets the categories from db table, categories
+function* getCategories() {
     try {
-        yield call(axios.put, `/api/favorite${id.payload}`)
+        const categoryResponse = yield axios.get('/api/category');
+        console.log(categoryResponse);
+        yield put({type: 'SET_CATEGORIES', payload: categoryResponse.data});
+    } catch (error) {
+        console.log('unable to retrieve categories,', error);
+    }
+}
+
+// this function updates the category_id of the favorited images in table, favorites
+function* putCategory(category) {
+    try {
+        yield call(axios.put, `/api/favorite${category.payload}`)
         yield put({type: 'GET_GIFS'});
     } catch (error) {
         console.log('Unable to update put,', error);
     }
 }
 
+// this function gets all the favorites then sets favorites into a reducer
 function* getFavorites() {
     try{
         const getResponse = yield axios.get('/api/favorites');
@@ -73,6 +87,7 @@ function* getFavorites() {
 
 // Reducers:
 
+// this will store all favorited images posted on search side to db table, favorite
 favoritesReducer = (state = [], action) => {
     switch(action.type) {
         case 'SET_FAVORITES':
@@ -82,6 +97,15 @@ favoritesReducer = (state = [], action) => {
     }
 }
 
+// this will store all categories pulled from db table, category
+categoryReducer = (state = [], action) => {
+    switch(action.type) {
+        case 'SET_CATEGORIES':
+            return action.payload;
+        default:
+            return state;
+    }
+}
 
 const sagaMiddleware = createSagaMiddleware();
 
