@@ -35,7 +35,12 @@ function* watcherSaga() {
 } 
 
 function* fetchGifs() {
-    
+    try {
+        const searchResponse = yield axios.get('/api/');
+        yield put({ type: 'GET_GIFS', payload: searchResponse.data});
+    } catch (error) {
+        console.log('Error fetching gifs.', error);
+    }
 }
 
 function* searchGiphy() {
@@ -46,13 +51,18 @@ function* postGifs() {
 
 }
 
-function* putCategory() {
-
+function* putCategory(id) {
+    try {
+        yield call(axios.put, `/api/favorite${id.payload}`)
+        yield put({type: 'GET_GIFS'});
+    } catch (error) {
+        console.log('Unable to update put,', error);
+    }
 }
 
 function* getFavorites() {
     try{
-        const getResponse = yield axios.get('/favorites');
+        const getResponse = yield axios.get('/api/favorites');
         console.log(getResponse);
         yield put({type:'SET_FAVORITES', payload: getResponse.data});
     } catch(error) {
