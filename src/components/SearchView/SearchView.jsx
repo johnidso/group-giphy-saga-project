@@ -41,7 +41,7 @@ function SearchView() {
         setSearchText(event.target.value);        
     }
 
-    const handleSubmit = () => {
+    const handleSubmit = (event) => {
         event.preventDefault();
         // Validate Input
         if (searchText === '') {
@@ -51,6 +51,12 @@ function SearchView() {
 
         console.log('This is when we dispatch to saga'); // test
         // searchText here becomes the key and the value
+        sendSearch();
+        // dispatch({ type: 'SEARCH_GIPHY', payload: {searchText}});
+        // setSearchText('');
+    }
+
+    const sendSearch = () => {
         dispatch({ type: 'SEARCH_GIPHY', payload: {searchText}});
         setSearchText('');
     }
@@ -70,9 +76,9 @@ function SearchView() {
 
     // On component load search for 'search'
     // TODO: Uncomment when the app is live
-    // useEffect(() => {
-    //     handleSubmit();
-    // }, []);
+    useEffect(() => {
+        sendSearch();
+    }, []);
 
     return (
         <div className="search-body">

@@ -14,6 +14,7 @@ function FavoriteItem (favorites) {
             // this updates our favorites category id inside our database
     const handleClick = (event) => {
         dispatch({ type: 'ADD_CATEGORY', payload: {favoriteId: favorites.favorites.id, categoryName: event}});
+        dispatch({type: 'GET_FAVORITES'});
     }
 
     useEffect( () => {
@@ -23,13 +24,21 @@ function FavoriteItem (favorites) {
 
     return (
             <div>
-                <p><img src={favorites.favorites.url}></img></p>
+                <p><img src={favorites.favorites.url} height="200px"></img></p>
+                <p>Category {favorites.favorites.category_id}</p>
                 {dbCategories.map((category, index) => {
                     return (
-                        <>
-                            <input key={index} type="radio" name="category" id="category" value={category.name} onChange={(event) => handleClick(event.target.value)} />
-                            <label for="category">{category.name}</label>
-                        </>
+                        <div key={index}>
+                            <input 
+                                type="radio" 
+                                name={favorites.favorites.url} 
+                                id="category" 
+                                value={category.name} 
+                                onChange={(event) => handleClick(event.target.value)} 
+                            />
+                            <label htmlFor="category">{category.name}</label>
+
+                        </div>
                     )
                 })}
             </div>
