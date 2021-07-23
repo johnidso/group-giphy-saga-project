@@ -1,40 +1,53 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
+import FavoriteItem from "../FavoriteItem/FavoriteItem";
 
 
 function Favorites () {
 
     const dispatch = useDispatch();
-    const favorites = useSelector(store => store.favoritesReducer)
+    const favorites = useSelector(store => store.favoritesReducer);
 
+    // this retrieves the favorites set in database
     const getFavorites = () => {
         dispatch({type: 'GET_FAVORITES'});
     }
 
+    //handles click back to search
+    const backToSearchClick = () => {
+        history.push('/');
+    }
+
     useEffect( () => {
-        getFavorites;
+        getFavorites();
       }, []);
 
 
     return(
+        <>
         <div>
             {favorites.map((gif, index) => {
                 return (
-                    <div>
-                        <img src={gif.url}></img>
-                        <input type="radio" label="Funny" value="Funny" onChange={(event) => setCategory(event.target.value)} />Funny
-                        <input type="radio" label="Cohort" value="Cohort" onChange={(event) => setCategory(event.target.value)} />Cohort
-                        <input type="radio" label="Cartoon" value="Cartoon" onChange={(event) => setCategory(event.target.value)} />Cartoon
-                        <input type="radio" label="nsfw" value="nsfw" onChange={(event) => setCategory(event.target.value)} />nsfw
-                        <input type="radio" label="meme" value="meme" onChange={(event) => setCategory(event.target.value)} />meme
-                    </div>
+                    <FavoriteItem key={index} favorites={gif}/>
                 )
             })}
         </div>
+        <div>
+            <button onClick={backToSearchClick}>Back to Search</button>
+        </div>
+        </>
     )
 }
 
 export default Favorites;
+
+// Kong's old radio buttons
+{/* <input type="radio" label="Funny" value={dbCategories.name[0]} onChange={(event) => setCategory(event.target.value)} />Funny
+                        <input type="radio" label="Cohort" value={dbCategories.name[1]} onChange={(event) => setCategory(event.target.value)} />Cohort
+                        <input type="radio" label="Cartoon" value={dbCategories.name[2]} onChange={(event) => setCategory(event.target.value)} />Cartoon
+                        <input type="radio" label="nsfw" value={dbCategories.name[3]} onChange={(event) => setCategory(event.target.value)} />nsfw
+                        <input type="radio" label="meme" value={dbCategories.name[4]} onChange={(event) => setCategory(event.target.value)} />meme */}
 
 
 //JOHN'S CODE BELOW
