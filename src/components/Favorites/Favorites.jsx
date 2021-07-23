@@ -34,6 +34,7 @@ function Favorites () {
             })}
         </div>
         <div>
+            <p>Favorite Count: {favorites.length}</p>
             <button onClick={backToSearchClick}>Back to Search</button>
         </div>
         </>

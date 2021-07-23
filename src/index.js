@@ -54,6 +54,7 @@ function* postGifs(action) {
     console.log('in postGifs. Payload:', action.payload);
     try {
         yield axios.post('/api/favorite', action.payload);
+        yield alert('Added to favorites!');
     } catch (error) {
         console.log('error adding to favorites');
     }
