@@ -1,14 +1,42 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+
+import '../SearchView/SearchView.css';
+import Button from '@material-ui/core/Button';
+import SearchIcon from '@material-ui/icons/Search';
+import { makeStyles, TextField } from "@material-ui/core";
 
 function SearchView() {
     
     const history = useHistory();
     const dispatch = useDispatch();
-    const [ searchText, setSearchText ] = useState('');
+    const [ searchText, setSearchText ] = useState('search');
     const currentSearch = useSelector(store => store.currentSearch);
-    
+    const useStyles = makeStyles({
+        root: {
+            
+        },
+        searchImage: {
+            margin: "16px"
+        },
+        searchButton: {
+            margin: "8px"
+        },
+        button: {
+            margin: "8px"
+        },
+        favButton: {
+            margin: "8px",
+            background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+            color: 'white'
+        },
+        searchIcon: {
+            margin: "0 -8px 0 8px"
+        }
+    });
+    const classes = useStyles();
+
     const handleChange = (event) => {
         setSearchText(event.target.value);        
     }
@@ -40,32 +68,56 @@ function SearchView() {
         history.push('/favorites')
     }
 
+    // On component load search for 'search'
+    // TODO: Uncomment when the app is live
+    // useEffect(() => {
+    //     handleSubmit();
+    // }, []);
+
     return (
-        <div>
-            <p>SearchView content</p>
+        <div className="search-body">
             <form onSubmit={handleSubmit}>
-                <input 
+                {/* <input 
                     type="text"
                     name="searchField"
                     value={searchText}
                     onChange={handleChange} 
+                /> */}
+                <TextField 
+                    id="outlined-basic" 
+                    label="search" 
+                    variant="filled"
+                    value={searchText}
+                    onChange={handleChange} 
+                    className={classes.searchField}
                 />
-                <button type="submit">
+                <Button 
+                    type="submit" 
+                    className={classes.searchButton}
+                    variant="contained"
+                    color="primary"
+                >
                     Search
-                </button>
+                    <SearchIcon className={classes.searchIcon}/>
+                </Button>
             </form>
-            <p>display searched gif here:</p>
-                    <img src={currentSearch} height="200px"/>
-                    <br />
-                    <button
-                        onClick={() => {favoriteHandler(currentSearch)}}
-                    >
-                        Add to Favorites
-                    </button>
-                    <br />
-                    <button onClick={goToFavorites}>
-                        View Favorites
-                    </button>
+            <img src={currentSearch} height="250px" className={classes.searchImage}/>
+            <div className="search-button-container">
+                <Button 
+                    onClick={goToFavorites} 
+                    className={classes.button}
+                    variant="contained"
+                >
+                    View Favorites
+                </Button>
+                <Button
+                    onClick={() => {favoriteHandler(currentSearch)}}
+                    className={classes.favButton}
+                    variant="contained"
+                >
+                    Add Favorite
+                </Button>
+            </div>
         </div>
     );
 }
