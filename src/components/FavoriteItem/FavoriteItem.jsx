@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function FavoriteItem (favorites) {
 
     const dbCategories = useSelector(store => store.categoryReducer);
-
+    const dispatch = useDispatch();
     const [category, setCategory] = useState();
 
         // this retrieves the category list from our database
@@ -19,7 +19,7 @@ function FavoriteItem (favorites) {
 
     useEffect( () => {
         getCategories();
-        putCategory();
+        // putCategory(); // It's unclear to me why we would call this function when the page loads - Tim
       }, []);
 
     return (
