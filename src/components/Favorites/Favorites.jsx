@@ -29,6 +29,9 @@ function Favorites () {
     return(
         <>
         <div>
+            <p>Favorite Count: {favorites.length}</p>
+        </div>
+        <div>
             {favorites.map((gif, index) => {
                 return (
                     <FavoriteItem key={index} favorites={gif}/>
