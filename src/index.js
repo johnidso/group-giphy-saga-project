@@ -37,9 +37,11 @@ function* fetchGifs() {
 }
 
 function* searchGiphy(action) {
-    console.log('in searchGiphy. Payload:', action.payload);
+    console.log('in searchGiphy. Payload:', action.payload.searchText);
+    const searchText = action.payload.searchText;
+    console.log(searchText);
     try {
-        const searchResponse = yield axios.post('/api/search', action.payload);
+        const searchResponse = yield axios.get(`/api/search/?q=${searchText}`);
         console.log('This is searchResponse:', searchResponse); // test
         yield put({ type: 'SET_CURRENT_SEARCH', payload: searchResponse.data.data[0].images.original.url});
     } catch (error) {
