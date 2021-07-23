@@ -1,12 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+
+import '../SearchView/SearchView.css';
 
 function SearchView() {
     
     const history = useHistory();
     const dispatch = useDispatch();
-    const [ searchText, setSearchText ] = useState('');
+    const [ searchText, setSearchText ] = useState('search');
     const currentSearch = useSelector(store => store.currentSearch);
     
     const handleChange = (event) => {
@@ -40,9 +42,14 @@ function SearchView() {
         history.push('/favorites')
     }
 
+    // On component load search for 'search'
+    // TODO: Uncomment when the app is live
+    // useEffect(() => {
+    //     handleSubmit();
+    // }, []);
+
     return (
-        <div>
-            <p>SearchView content</p>
+        <div className="search-body">
             <form onSubmit={handleSubmit}>
                 <input 
                     type="text"
@@ -50,22 +57,22 @@ function SearchView() {
                     value={searchText}
                     onChange={handleChange} 
                 />
-                <button type="submit">
+                <button type="submit" className="search-button">
                     Search
                 </button>
             </form>
-            <p>display searched gif here:</p>
-                    <img src={currentSearch} height="200px"/>
-                    <br />
-                    <button
-                        onClick={() => {favoriteHandler(currentSearch)}}
-                    >
-                        Add to Favorites
-                    </button>
-                    <br />
-                    <button onClick={goToFavorites}>
-                        View Favorites
-                    </button>
+            <img src={currentSearch} height="200px" className="search-image"/>
+            <div className="search-button-container">
+                <button
+                    onClick={() => {favoriteHandler(currentSearch)}}
+                    className="search-button"
+                >
+                    Add to Favorites
+                </button>
+                <button onClick={goToFavorites} className="search-button">
+                    View Favorites
+                </button>
+            </div>
         </div>
     );
 }
