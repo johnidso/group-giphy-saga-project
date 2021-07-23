@@ -22,8 +22,8 @@ function SearchView() {
         }
 
         console.log('This is when we dispatch to saga'); // test
-
-        dispatch({ type: 'SEARCH_GIPHY', payload: searchText});
+        // searchText here becomes the key and the value
+        dispatch({ type: 'SEARCH_GIPHY', payload: {searchText}});
         setSearchText('');
     }
 
@@ -59,7 +59,7 @@ function SearchView() {
                 </button>
             </form>
             <p>display searched gif here:</p>
-                    <img src={currentSearch.url} height="200px"/>
+                    <img src={currentSearch} height="200px"/>
                     <br />
                     <button
                         onClick={() => {favoriteHandler(currentSearch.id, currentSearch.name, currentSearch.url)}}
